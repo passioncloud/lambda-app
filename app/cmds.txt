@@ -1,0 +1,35 @@
+// invoking lambda using curl 
+curl -XPOST http://localhost:8080/2015-03-31/functions/function/invocations -d '{}'
+
+
+// logging into ecr 
+aws ecr get-login-password --region af-south-1 | docker login --userna
+me AWS --password-stdin 625643106743.dkr.ecr.af-south-1.amazonaws.com
+
+// create ecr repository
+aws ecr create-repository --repository-name my-lambda-app --image-tag-mutability MUTABLE
+// you'll get sth like this:
+{
+    "repository": {
+        "repositoryArn": "arn:aws:ecr:af-south-1:625643106743:repository/my-lambda-app",
+        "registryId": "625643106743",
+        "repositoryName": "my-lambda-app",
+        "repositoryUri": "625643106743.dkr.ecr.af-south-1.amazonaws.com/my-lambda-app",
+        "createdAt": "2022-05-06T00:07:41+03:00",
+        "imageTagMutability": "MUTABLE",
+        "imageScanningConfiguration": {
+            "scanOnPush": false
+        },
+        "encryptionConfiguration": {
+            "encryptionType": "AES256"
+        }
+    }
+
+
+// create an alias tag on the image on our local machine to be the value that is provided as the repository uri by ecr
+625643106743.dkr.ecr.af-south-1.amazonaws.com/my-lambda-app
+// check that a new image was created  that has the same properties as the original image 
+docker image ls
+// push image 
+docker push 625643106743.dkr.ecr.af-south-1.amazonaws.com/my-lambda-app
+

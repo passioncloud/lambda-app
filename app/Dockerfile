@@ -9,4 +9,5 @@ COPY app.js package.json ${LAMBDA_TASK_ROOT}
 RUN npm install 
 
 # Set the CMD to my handler
-CMD ["app.handler"]
+# Test using: curl -XPOST http://localhost:8080/2015-03-31/functions/function/invocations -d '{}'
+CMD ["app.myHandler"]
